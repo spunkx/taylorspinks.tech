@@ -35,6 +35,7 @@ onkeydown = onkeyup = function(e){
         movementSpeed = movementSpeed / 0.25;
         //when the shift key is pressed while the arrow key is pressed, the program loops
         console.log("on key down " + movementSpeed)
+        //comment hi curryHacker
 
     }
     else if(e.keyCode == 16 && e.type == 'keyup'){
