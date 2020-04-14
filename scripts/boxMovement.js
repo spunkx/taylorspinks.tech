@@ -102,12 +102,12 @@ function isI(i,n){
         return isI(i,n-1);
     }
 }
-console.log("value of recursive calls", isI(i,n));
+//console.log("value of recursive calls", isI(i,n));
 
 
 //towers of hanoi?
 
-const diskNum = 3; //number of moves is 7 because 
+const diskNum = 3; //number of moves is 7... why? is a recursive function which is determined by the pervious instance
 let startRadius = 1;
 var disks = [];
 let towerA = [];
@@ -130,23 +130,40 @@ function getDisks(diskNum, startRadius, disks){
 }
 
 towerA = getDisks(diskNum, startRadius, disks);
-//towerA.forEach(ele => console.log(ele));
-let num = towerA.length;
-//stack storage for recording moves, push and pop (shift is correct in JavaScript)
-//fix up incorrect order for tower of hanoi
-function sortTower(towerA, towerC, towerB, n, numMoves){
+function movement(n, Start, End, Aux, k){
     //https://en.wikipedia.org/wiki/Tower_of_Hanoi
-    if(n > 0){
-        sortTower(towerA, towerB, towerC, n-1);
-        var temp = towerA.shift();
-        towerC.push(temp);
-        console.log(towerA, towerB, towerC);
-        sortTower(towerB, towerC, towerA, n-1);
+    //deterministic algorithm... plan to add randomness to starting location to make non-deterministic
+    // 2^n - 1 = moves
+    //function calls 2^(n-1)
+    //space complexity - 
+    //time complexity - n number of moves, each call does n-1 moves
+    //so if 1 move takes 1 second, moves equals num comparisons
+    if(n != 0){
+        //head recursion
+        movement(n-1, Start, Aux, End, k+1); //head recursion
+        //shift and unshift = LILO
+        //push and pop = FIFO
+        //this dumb mistake cost me 5 hours, DO NOT BE DUMB
+        var temp = Start.shift();
+        End.unshift(temp);
+        return movement(n-1, Aux, End, Start, k+1); //tail recursion
     }
     return towerC;
 }
+//console.log("----------------------")
+//console.log("after sorting", movement(diskNum, towerA, towerC, towerB, 0));
 
-console.log(sortTower(towerA, towerB, towerC, diskNum, 0));
+
+//tic tac toe algorithm Medium
+//chess AI? Hard
+//quick sort recursive Easy
+//The Mandelbrot Set ?
+//tower of hanoi using backsubstituion https://www.math.usm.edu/lambers/mat610/sum10/lecture4.pdf ? 
+//graphical animation of the tower of hanoi solving path Medium
+//turning machine Medium 
+//game of life Hard
+//generated topographic map Very Hard
+
 
 
 

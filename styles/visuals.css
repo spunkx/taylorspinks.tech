@@ -11,6 +11,21 @@ body {
     background-color: red;
 }
 
+.tictactoe{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 0px;
+    left: 500px;
+    color: darkred;
+    background-color: darkblue;
+}
+
+.execute{
+    position: relative;
+    left: 75%;
+}
+
 .Dashboard {
     position: relative;
     width: 90%;
