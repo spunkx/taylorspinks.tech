@@ -11,6 +11,10 @@ body {
     background-color: red;
 }
 
+.emptyFields{
+    position: absolute;
+}
+
 .tictactoe{
     position: absolute;
     width: 500px;

@@ -5,16 +5,14 @@ const boxy = document.querySelector('.tictactoe');
 const executebtn = boxy.querySelector('.execute');
 
 executebtn.addEventListener('click', (e) => {
-    console.log("Test?!");
-    if(((boxy.querySelector('inputX')) || (boxy.querySelector('inputY'))) == null){
-        console.log("fields are empty");
+    if(((boxy.querySelector('.inputX').length) || (boxy.querySelector('.inputY').) == 0)){
+        document.querySelector('.emptyFields').innerHTML = "workplease";
     }
-    /*
     else{
         runtictactoe();
-    }*/
+    }
 })
-/*
+
 function runtictactoe(){
     //2d array of numbers,  
     //0,2 1,2 2,2
@@ -53,7 +51,7 @@ function runtictactoe(){
 
     //make a turn system
 
-
+/*
     function game(turnNum, turn, selectionHistory, gameState, gird){
         console.out("current grid is!", grid);
 
@@ -72,5 +70,5 @@ function runtictactoe(){
         //user places their mark, check surrounding squares for marks when marks equals length of x
         //if neighbour mark is found, call through square to check sequence
         //for other notes refer to physical notepad
-    }
-}*/
+    }*/
+}
