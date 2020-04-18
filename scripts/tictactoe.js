@@ -1,5 +1,4 @@
-//tic-tac-toe & the extremely arrogent AI
-//once apon a time...
+
 
 
 const boxy = document.querySelector('.tictactoe');
