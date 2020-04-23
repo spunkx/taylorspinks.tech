@@ -5,7 +5,10 @@ const boxy = document.querySelector('.tictactoe');
 const executebtn = boxy.querySelector('.execute');
 
 executebtn.addEventListener('click', (e) => {
-    if(((boxy.querySelector('.inputX').length) || (boxy.querySelector('.inputY').) == 0)){
+    //the problem is that I need to tell the browser to check the textbox when it is selected in order to get the text
+    //probably going to need it to be in a form, or come up with a way to do it without a form. I shouldn't need a form as I am not doing a post req
+    console.log(boxy.querySelector('.inputX').innerHTML);
+    if(((boxy.querySelector('.inputX').length) && (boxy.querySelector('.inputY').length) == 0)){
         document.querySelector('.emptyFields').innerHTML = "workplease";
     }
     else{
