@@ -3,52 +3,65 @@
 
 const boxy = document.querySelector('.tictactoe');
 const executebtn = boxy.querySelector('.execute');
+//another selector for the textboxes.
 
 executebtn.addEventListener('click', (e) => {
     //the problem is that I need to tell the browser to check the textbox when it is selected in order to get the text
     //probably going to need it to be in a form, or come up with a way to do it without a form. I shouldn't need a form as I am not doing a post req
-    console.log(boxy.querySelector('.inputX').innerHTML);
-    if(((boxy.querySelector('.inputX').length) && (boxy.querySelector('.inputY').length) == 0)){
-        document.querySelector('.emptyFields').innerHTML = "workplease";
+    //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
+    if((boxy.querySelector('.inputX').value.length && boxy.querySelector('.inputY').value.length) == 0){
+        document.querySelector('.emptyFields').innerHTML = "<b>Please enter two integers!</b>";
+        console.log("Please enter two integers!");
+    }
+    else if(!Number.isInteger(Number(boxy.querySelector('.inputX').value)) && !Number.isInteger(Number(boxy.querySelector('.inputX').value))){
+        document.querySelector('.emptyFields').innerHTML = "";
+        document.querySelector('.emptyFields').innerHTML = "<b>Please enter integer values only!</b>";
+        console.log("Please enter integer values only!");
     }
     else{
-        runtictactoe();
+        document.querySelector('.emptyFields').innerHTML = "";
+        //check for integer
+        x = boxy.querySelector('.inputX').value;
+        y = boxy.querySelector('.inputY').value;
+        runtictactoe(x,y);
     }
 })
 
-function runtictactoe(){
+function runtictactoe(x, y){
+    console.log("x ", x, "\ny ", y);
     //2d array of numbers,  
     //0,2 1,2 2,2
     //0,1 1,1 2,1
     //0,0 1,0 2,0
 
     //maybe merge into arrow function later
-    x = 3;
-    y = 3;
     xyValue = x*y;
     let grid =  new Array();
+    grid = makeGrid(grid, x, xyValue, 0, 0);
+
+    console.log(grid);
+
+}
 
     //make grid recursively
-    function makeGrid(grid, lengthX, xy, xIter, yIter){
-        //make three copies of each line
-        //lineX(n) onto lineX(n)
-        grid.push([xIter,yIter]);
-        if(xy > 0){
-            if((xy % lengthX.length === 0) && (xy != (lengthX.length * lengthX.length))){
-                xIter = 0;
-                //when mod 0 if not at the start, then set iter to zero
-                //then set LineX[0..3] to LineY[0..3]
-                //do again
-                makeGrid(grid, lengthX, xy-1, xIter, yIter+1)
-            }
-            else{
-                makeGrid(grid, lengthX, xy-1, xIter+1, yIter);
-            }
+function makeGrid(grid, lengthX, xy, xIter, yIter){
+    //make three copies of each line
+    //lineX(n) onto lineX(n)
+    grid.push([xIter,yIter]);
+    if(xy > 0){
+        if((xy % lengthX.length === 0) && (xy != (lengthX.length * lengthX.length))){
+            xIter = 0;
+            //when mod 0 if not at the start, then set iter to zero
+            //then set LineX[0..3] to LineY[0..3]
+            //do again
+            makeGrid(grid, lengthX, xy-1, xIter, yIter+1)
         }
-        return grid;
+        else{
+            makeGrid(grid, lengthX, xy-1, xIter+1, yIter);
+        }
     }
-
-    grid = makeGrid(grid, x, xyValue, 0, 0);
+    return grid;
+}
 
     //user makes selection
 
@@ -74,4 +87,3 @@ function runtictactoe(){
         //if neighbour mark is found, call through square to check sequence
         //for other notes refer to physical notepad
     }*/
-}
