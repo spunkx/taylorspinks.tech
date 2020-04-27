@@ -9,11 +9,11 @@ executebtn.addEventListener('click', (e) => {
     //the problem is that I need to tell the browser to check the textbox when it is selected in order to get the text
     //probably going to need it to be in a form, or come up with a way to do it without a form. I shouldn't need a form as I am not doing a post req
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
-    if((boxy.querySelector('.inputX').value.length && boxy.querySelector('.inputY').value.length) == 0){
+    if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter two integers!</b>";
         console.log("Please enter two integers!");
     }
-    else if(!Number.isInteger(Number(boxy.querySelector('.inputX').value)) && !Number.isInteger(Number(boxy.querySelector('.inputX').value))){
+    else if(!Number.isInteger(Number(boxy.querySelector('.inputX').value)) || !Number.isInteger(Number(boxy.querySelector('.inputY').value))){
         document.querySelector('.emptyFields').innerHTML = "";
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter integer values only!</b>";
         console.log("Please enter integer values only!");
@@ -28,7 +28,6 @@ executebtn.addEventListener('click', (e) => {
 })
 
 function runtictactoe(x, y){
-    console.log("x ", x, "\ny ", y);
     //2d array of numbers,  
     //0,2 1,2 2,2
     //0,1 1,1 2,1
@@ -38,30 +37,45 @@ function runtictactoe(x, y){
     xyValue = x*y;
     let grid =  new Array();
     grid = makeGrid(grid, x, xyValue, 0, 0);
-
     console.log(grid);
+
 
 }
 
     //make grid recursively
-function makeGrid(grid, lengthX, xy, xIter, yIter){
-    //make three copies of each line
-    //lineX(n) onto lineX(n)
+    //Constant "X"
+function makeGrid(grid, X, xy, xIter, yIter){
     grid.push([xIter,yIter]);
+    xy = xy-1;
     if(xy > 0){
-        if((xy % lengthX.length === 0) && (xy != (lengthX.length * lengthX.length))){
+        if(xy % X === 0 && xy != X*X){
             xIter = 0;
-            //when mod 0 if not at the start, then set iter to zero
-            //then set LineX[0..3] to LineY[0..3]
-            //do again
-            makeGrid(grid, lengthX, xy-1, xIter, yIter+1)
+            makeGrid(grid, X, xy, xIter, yIter+1)
         }
         else{
-            makeGrid(grid, lengthX, xy-1, xIter+1, yIter);
+            makeGrid(grid, X, xy, xIter+1, yIter);
         }
     }
     return grid;
 }
+/*interesting configuration
+function makeGrid(grid, X, xy, xIter, yIter){
+    if(xy > 0){
+        if(xy % X === 0 && xy != X*X){
+            xIter = 0;
+            makeGrid(grid, X, xy-1, xIter, yIter+1)
+            grid.push([xIter,yIter]);
+        }
+        else{
+            grid.push([xIter,yIter]);
+            makeGrid(grid, X, xy-1, xIter+1, yIter);
+        }
+    }
+    return grid;
+}
+*/
+
+
 
     //user makes selection
 
