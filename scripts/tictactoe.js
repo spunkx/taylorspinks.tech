@@ -1,8 +1,6 @@
-
-
-
 const boxy = document.querySelector('.tictactoe');
 const executebtn = boxy.querySelector('.execute');
+const gameSelector = boxy.querySelector('.game');
 //another selector for the textboxes.
 
 executebtn.addEventListener('click', (e) => {
@@ -10,24 +8,33 @@ executebtn.addEventListener('click', (e) => {
     //probably going to need it to be in a form, or come up with a way to do it without a form. I shouldn't need a form as I am not doing a post req
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
+        gameSelector.style.display = "none";
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter two integers!</b>";
         console.log("Please enter two integers!");
     }
     else if(!Number.isInteger(Number(boxy.querySelector('.inputX').value)) || !Number.isInteger(Number(boxy.querySelector('.inputY').value))){
         document.querySelector('.emptyFields').innerHTML = "";
+        gameSelector.style.display = "none";
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter integer values only!</b>";
         console.log("Please enter integer values only!");
+    }
+    else if(boxy.querySelector('.inputX').value != boxy.querySelector('.inputY').value){
+        document.querySelector('.emptyFields').innerHTML = "";
+        gameSelector.style.display = "none";
+        document.querySelector('.emptyFields').innerHTML = "<b>This game currently supports x=y only!</b>";
+        console.log("This game currently supports x=y only!");
     }
     else{
         document.querySelector('.emptyFields').innerHTML = "";
         //check for integer
+        gameSelector.style.display = "block";
         x = boxy.querySelector('.inputX').value;
         y = boxy.querySelector('.inputY').value;
-        runtictactoe(x,y);
+        runtictactoe(x,y,gameSelector);
     }
 })
 
-function runtictactoe(x, y){
+function runtictactoe(x,y,gameSelector){
     //2d array of numbers,  
     //0,2 1,2 2,2
     //0,1 1,1 2,1
@@ -39,11 +46,14 @@ function runtictactoe(x, y){
     grid = makeGrid(grid, x, xyValue, 0, 0);
     console.log(grid);
 
+    drawGrid(grid,x,gameSelector);
 
 }
-
     //make grid recursively
     //Constant "X"
+
+    //generating a grid recursively is a bad idea
+    //change to iteratively later
 function makeGrid(grid, X, xy, xIter, yIter){
     grid.push([xIter,yIter]);
     xy = xy-1;
@@ -58,22 +68,7 @@ function makeGrid(grid, X, xy, xIter, yIter){
     }
     return grid;
 }
-/*interesting configuration
-function makeGrid(grid, X, xy, xIter, yIter){
-    if(xy > 0){
-        if(xy % X === 0 && xy != X*X){
-            xIter = 0;
-            makeGrid(grid, X, xy-1, xIter, yIter+1)
-            grid.push([xIter,yIter]);
-        }
-        else{
-            grid.push([xIter,yIter]);
-            makeGrid(grid, X, xy-1, xIter+1, yIter);
-        }
-    }
-    return grid;
-}
-*/
+
 
 
 

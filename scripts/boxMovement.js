@@ -94,7 +94,6 @@ let n = 2;
 function isI(i,n){
     isKill = false;
     i = i*(-10);
-    console.log("i is currently!", i)
     if (n == 1){
         return i;
     }
@@ -131,19 +130,11 @@ function getDisks(diskNum, startRadius, disks){
 
 towerA = getDisks(diskNum, startRadius, disks);
 function movement(n, Start, End, Aux, k){
-    //https://en.wikipedia.org/wiki/Tower_of_Hanoi
-    //deterministic algorithm... plan to add randomness to starting location to make non-deterministic
-    // 2^n - 1 = moves
-    //function calls 2^(n-1)
-    //space complexity - 
-    //time complexity - n number of moves, each call does n-1 moves
-    //so if 1 move takes 1 second, moves equals num comparisons
     if(n != 0){
         //head recursion
         movement(n-1, Start, Aux, End, k+1); //head recursion
         //shift and unshift = LILO
         //push and pop = FIFO
-        //this dumb mistake cost me 5 hours, DO NOT BE DUMB
         var temp = Start.shift();
         End.unshift(temp);
         return movement(n-1, Aux, End, Start, k+1); //tail recursion

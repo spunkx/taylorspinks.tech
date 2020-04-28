@@ -1,0 +1,9 @@
+//tic tac toe algorithm Medium
+//chess AI? Hard
+//quick sort recursive Easy
+//The Mandelbrot Set ?
+//tower of hanoi using backsubstituion https://www.math.usm.edu/lambers/mat610/sum10/lecture4.pdf ? 
+//graphical animation of the tower of hanoi solving path Medium
+//turning machine Medium 
+//game of life Hard
+//generated topographic map Very Hard

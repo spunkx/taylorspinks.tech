@@ -1,0 +1,16 @@
+/*interesting configuration
+function makeGrid(grid, X, xy, xIter, yIter){
+    if(xy > 0){
+        if(xy % X === 0 && xy != X*X){
+            xIter = 0;
+            makeGrid(grid, X, xy-1, xIter, yIter+1)
+            grid.push([xIter,yIter]);
+        }
+        else{
+            grid.push([xIter,yIter]);
+            makeGrid(grid, X, xy-1, xIter+1, yIter);
+        }
+    }
+    return grid;
+}
+*/
