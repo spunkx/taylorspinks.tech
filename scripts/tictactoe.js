@@ -4,8 +4,6 @@ const gameSelector = boxy.querySelector('.game');
 //another selector for the textboxes.
 
 executebtn.addEventListener('click', (e) => {
-    //the problem is that I need to tell the browser to check the textbox when it is selected in order to get the text
-    //probably going to need it to be in a form, or come up with a way to do it without a form. I shouldn't need a form as I am not doing a post req
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
         gameSelector.style.display = "none";
@@ -28,46 +26,66 @@ executebtn.addEventListener('click', (e) => {
         document.querySelector('.emptyFields').innerHTML = "";
         //check for integer
         gameSelector.style.display = "block";
+        //when dimensions aren't square, use ratio for grid
+
         x = boxy.querySelector('.inputX').value;
         y = boxy.querySelector('.inputY').value;
-        runtictactoe(x,y,gameSelector);
+        runtictactoe(x,y);
     }
 })
 
-function runtictactoe(x,y,gameSelector){
-    //2d array of numbers,  
-    //0,2 1,2 2,2
-    //0,1 1,1 2,1
-    //0,0 1,0 2,0
-
-    //maybe merge into arrow function later
+function runtictactoe(x,y){
     xyValue = x*y;
     let grid =  new Array();
-    grid = makeGrid(grid, x, xyValue, 0, 0);
-    console.log(grid);
+    //define boxpixelLength
+    //assumes width = height
+    //maxlineSize = parseFloat(gameSelector.style.width.replace("px", ""));
+    //set to equal the width within the html
+    //DO NOT USE CSS FOR CANVAS, as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
+    maxlineSize = 400;
 
-    drawGrid(grid,x,gameSelector);
+    grid = makeGrid(grid, x, xyValue, 0, 0, maxlineSize);
+
+    //drawGrid(grid,x,gameSelector);
 
 }
-    //make grid recursively
+    //make grid recursively, bad idea, better to draw grids iteratively due to recursion depth
+    //make two versions and compare their efficiency
     //Constant "X"
 
-    //generating a grid recursively is a bad idea
-    //change to iteratively later
-function makeGrid(grid, X, xy, xIter, yIter){
+function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
     grid.push([xIter,yIter]);
+
+    if((yIter*X) < X){
+        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert");
+    }
+    else if((yIter*X) == X && (yIter*X) < 2*(X)){
+        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz");
+    }
+    //xIter or yIter is 0->2 = 3 elements
+    if((xIter+1 == X && yIter+1 == X) || (X == 2 && xIter == X-1)){
+
+        drawLine(maxlineSize, maxlineSize, gameSelector, "vert");
+        drawLine(maxlineSize, maxlineSize, gameSelector, "hoz");
+    }
+
     xy = xy-1;
     if(xy > 0){
         if(xy % X === 0 && xy != X*X){
             xIter = 0;
-            makeGrid(grid, X, xy, xIter, yIter+1)
+            makeGrid(grid, X, xy, xIter, yIter+1, maxlineSize);
         }
         else{
-            makeGrid(grid, X, xy, xIter+1, yIter);
+            makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize);
         }
     }
     return grid;
 }
+
+/*
+function defineSquare(){
+
+}*/
 
 
 
