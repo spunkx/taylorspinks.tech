@@ -3,6 +3,9 @@ const executebtn = boxy.querySelector('.execute');
 const gameSelector = boxy.querySelector('.game');
 //another selector for the textboxes.
 
+var drawnState = 0;
+var tttMap = new Map(); //use cache or something to store
+
 executebtn.addEventListener('click', (e) => {
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
@@ -24,8 +27,14 @@ executebtn.addEventListener('click', (e) => {
     }
     else{
         document.querySelector('.emptyFields').innerHTML = "";
+        if(drawnState == 1){
+            gameSelector.style.display = "none";
+            gameSelector.style.display = "block";
+        }
+        else{
+            gameSelector.style.display = "block";
+        }
         //check for integer
-        gameSelector.style.display = "block";
         //when dimensions aren't square, use ratio for grid
 
         x = boxy.querySelector('.inputX').value;
@@ -40,10 +49,12 @@ function runtictactoe(x,y){
     //define boxpixelLength
     //assumes width = height
     //set to equal the width within the html
-    //DO NOT USE CSS FOR CANVAS, as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
+    //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
     maxlineSize = 400;
-
-    grid = makeGrid(grid, x, xy, 0, 0, maxlineSize);
+    makeGrid(grid, x, xy, 0, 0, maxlineSize);
+    console.log(tttMap);
+    console.log(grid);
+    drawnState = 1;
 
 }
     //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
@@ -51,18 +62,16 @@ function runtictactoe(x,y){
 
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
     grid.push([xIter,yIter]);
-
     if((yIter*X) < X){
-        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert");
+        tttMap.set({xIter,yIter}, drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert"));
     }
     else if((yIter*X) == X && (yIter*X) < 2*(X)){
-        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz");
+        tttMap.set({xIter,yIter}, drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz"));
     }
     //xIter or yIter is 0->2 = 3 elements
     if((xIter+1 == X && yIter+1 == X) || (X == 2 && xIter == X-1)){
-
-        drawLine(maxlineSize, maxlineSize, gameSelector, "vert");
-        drawLine(maxlineSize, maxlineSize, gameSelector, "hoz");
+        tttMap.set({xIter,yIter}, drawLine(maxlineSize, maxlineSize, gameSelector, "vert"));
+        tttMap.set({xIter,yIter},drawLine(maxlineSize, maxlineSize, gameSelector, "hoz"));
     }
 
     xy = xy-1;
@@ -75,8 +84,11 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
             makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize);
         }
     }
+
     return grid;
 }
+
+//grid garbage collection?
 
 /*
 function defineSquare(){
