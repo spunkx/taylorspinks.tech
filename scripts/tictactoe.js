@@ -50,7 +50,7 @@ function runtictactoe(x,y){
     //assumes width = height
     //set to equal the width within the html
     //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
-    maxlineSize = 400;
+    maxlineSize = 800;
     makeGrid(grid, x, xy, 0, 0, maxlineSize);
     console.log(tttMap);
     console.log(grid);

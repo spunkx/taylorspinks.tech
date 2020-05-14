@@ -11,15 +11,20 @@ function drawLine(start, end, selector, direction){
     if(direction === "hoz"){
 
         //need to use the ACTUAL locations to define the x and y, literally, rather than using an abstract value
+        //ctx.strokeStyle = "#00ff00";
         drawnLine.push("hozLine", {zero, start}, {start, end});
+        ctx.beginPath();
         ctx.moveTo(0, start);
         ctx.lineTo(end, start);
+        ctx.strokeStyle = "blue";
         ctx.stroke();
     }
     else if(direction === "vert"){
         drawnLine.push("vertLine", {start, zero}, {start, end});
+        ctx.beginPath();
         ctx.moveTo(start, 0);
         ctx.lineTo(start, end);
+        ctx.strokeStyle = "red";
         ctx.stroke();
     }
     //must invert lineLength with x
