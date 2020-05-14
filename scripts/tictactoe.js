@@ -35,23 +35,19 @@ executebtn.addEventListener('click', (e) => {
 })
 
 function runtictactoe(x,y){
-    xyValue = x*y;
+    xy = x*y;
     let grid =  new Array();
     //define boxpixelLength
     //assumes width = height
-    //maxlineSize = parseFloat(gameSelector.style.width.replace("px", ""));
     //set to equal the width within the html
     //DO NOT USE CSS FOR CANVAS, as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
     maxlineSize = 400;
 
-    grid = makeGrid(grid, x, xyValue, 0, 0, maxlineSize);
-
-    //drawGrid(grid,x,gameSelector);
+    grid = makeGrid(grid, x, xy, 0, 0, maxlineSize);
 
 }
-    //make grid recursively, bad idea, better to draw grids iteratively due to recursion depth
+    //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
     //make two versions and compare their efficiency
-    //Constant "X"
 
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
     grid.push([xIter,yIter]);
