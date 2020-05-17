@@ -4,7 +4,6 @@ const gameSelector = boxy.querySelector('.game');
 //another selector for the textboxes.
 
 var drawnState = 0;
-var tttMap = new Map(); //use cache or something to store
 
 executebtn.addEventListener('click', (e) => {
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
@@ -50,9 +49,8 @@ function runtictactoe(x,y){
     //assumes width = height
     //set to equal the width within the html
     //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
-    maxlineSize = 800;
+    maxlineSize = 400; //this needs to be selected off the html document
     makeGrid(grid, x, xy, 0, 0, maxlineSize);
-    console.log(tttMap);
     console.log(grid);
     drawnState = 1;
 
@@ -60,27 +58,44 @@ function runtictactoe(x,y){
     //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
     //make two versions and compare their efficiency
 
+function makeInteractable(cords){
+    
+
+}
+
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
+    //interactable grid = find centre of grid
+    //tag the centre
+    //measure 1/2 some division of one line to the next line in both x and y direction
+    //define tag as the area of that singular square
+    //do this total squares minus 1/n, and then mirror on the left over
+    //merge with current implementation for efficiency
+    //must convert from grid cords to screen cords (css pixel values)
     grid.push([xIter,yIter]);
     if((yIter*X) < X){
-        tttMap.set({xIter,yIter}, drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert"));
+        console.log("This one 1", xIter, yIter);
+        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert");
     }
     else if((yIter*X) == X && (yIter*X) < 2*(X)){
-        tttMap.set({xIter,yIter}, drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz"));
+        console.log("This one 2", xIter, yIter);
+        drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz");
     }
     //xIter or yIter is 0->2 = 3 elements
     if((xIter+1 == X && yIter+1 == X) || (X == 2 && xIter == X-1)){
-        tttMap.set({xIter,yIter}, drawLine(maxlineSize, maxlineSize, gameSelector, "vert"));
-        tttMap.set({xIter,yIter},drawLine(maxlineSize, maxlineSize, gameSelector, "hoz"));
+        console.log("This one 3", xIter, yIter);
+        drawLine(maxlineSize, maxlineSize, gameSelector, "vert");
+        drawLine(maxlineSize, maxlineSize, gameSelector, "hoz");
     }
 
     xy = xy-1;
     if(xy > 0){
         if(xy % X === 0 && xy != X*X){
             xIter = 0;
+            makeInteractable((xIter,yIter+1));
             makeGrid(grid, X, xy, xIter, yIter+1, maxlineSize);
         }
         else{
+            makeInteractable((xIter+1,yIter));
             makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize);
         }
     }

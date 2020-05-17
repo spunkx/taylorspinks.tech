@@ -26,14 +26,12 @@ body {
 
 .tictactoe{
     position: absolute;
-    /*width: 500px;
-    height: 500px;*/
-    width: 1000px;
-    height: 1000px;
+    width: 500px;
+    height: 500px;
     top: 0px;
     left: 500px;
     color: darkred;
-    background-color: black;
+    background-color: white;
 }
 
 .execute{

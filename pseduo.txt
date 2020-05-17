@@ -1,0 +1,9 @@
+    
+make interactable
+	//interactable grid = find centre of grid
+    //tag the centre
+    //measure 1/2 some division of one line to the next line in both x and y direction
+    //define tag as the area of that singular square
+    //do this total squares minus 1/n, and then mirror on the left over
+    //merge with current implementation for efficiency
+    //must convert from grid cords to screen cords (css pixel values)

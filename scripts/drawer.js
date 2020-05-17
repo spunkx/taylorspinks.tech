@@ -4,32 +4,27 @@
 //lineLocationX & lineLocationY = where you want my line on the screen
 //https://www.w3resource.com/html5-canvas/html5-canvas-lines.php
 function drawLine(start, end, selector, direction){
-    let drawnLine = [];
-    let zero = 0; //why this is required to make this work is beyond me
     let ctx = selector.getContext("2d");
     //for now direction is a string, but later will change to a degrees or radians measurement
     if(direction === "hoz"){
 
         //need to use the ACTUAL locations to define the x and y, literally, rather than using an abstract value
         //ctx.strokeStyle = "#00ff00";
-        drawnLine.push("hozLine", {zero, start}, {start, end});
         ctx.beginPath();
         ctx.moveTo(0, start);
         ctx.lineTo(end, start);
-        ctx.strokeStyle = "blue";
+        ctx.strokeStyle = "green";
         ctx.stroke();
     }
     else if(direction === "vert"){
-        drawnLine.push("vertLine", {start, zero}, {start, end});
         ctx.beginPath();
         ctx.moveTo(start, 0);
         ctx.lineTo(start, end);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "green";
         ctx.stroke();
     }
     //must invert lineLength with x
 
-    return drawnLine
 }
 /*
 function eraseLine(){
