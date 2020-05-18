@@ -35,12 +35,20 @@ executebtn.addEventListener('click', (e) => {
         }
         //check for integer
         //when dimensions aren't square, use ratio for grid
-
+        
         x = boxy.querySelector('.inputX').value;
         y = boxy.querySelector('.inputY').value;
         runtictactoe(x,y);
     }
 })
+
+
+function createcentreCursor(x,y){
+    let cursor = [];
+    cursor[0] = x;
+    cursor[1] = y;
+    return cursor;
+}
 
 function runtictactoe(x,y){
     xy = x*y;
@@ -50,7 +58,8 @@ function runtictactoe(x,y){
     //set to equal the width within the html
     //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
     maxlineSize = 400; //this needs to be selected off the html document
-    makeGrid(grid, x, xy, 0, 0, maxlineSize);
+    let centreCursor = createcentreCursor((1*(maxlineSize/x))/2, (1*(maxlineSize/x)/2));
+    makeGrid(grid, x, xy, 0, 0, maxlineSize, centreCursor);
     console.log(grid);
     drawnState = 1;
 
@@ -58,12 +67,7 @@ function runtictactoe(x,y){
     //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
     //make two versions and compare their efficiency
 
-function makeInteractable(cords){
-    
-
-}
-
-function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
+function makeInteractable(x, y, pixX, pixY){
     //interactable grid = find centre of grid
     //tag the centre
     //measure 1/2 some division of one line to the next line in both x and y direction
@@ -71,18 +75,36 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
     //do this total squares minus 1/n, and then mirror on the left over
     //merge with current implementation for efficiency
     //must convert from grid cords to screen cords (css pixel values)
+
+    //console.log("makeInteractable",x,y);
+
+    let centreBox = document.createElement("div");
+    centreBox.setAttribute('class', "a" + String(x) + "a" + String(y));
+    gameSelector.append(centreBox);
+    // + String(x) + "," + String(y)
+    centreDiv = boxy.querySelector("." + "a" + String(x) + "a" + String(y)); //must start with a letter and no commas
+    centreDiv.style.left = String(pixX)+"px";
+    centreDiv.style.top = String(pixY)+"px";
+    centreDiv.style.width = String(pixX+pixX)+"px";
+    centreDiv.style.height = String(pixY+pixY)+"px";
+    centreDiv.innerHTML = "test";
+}
+
+
+function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
+    if(xy == X*X){
+        makeInteractable(xIter, yIter, centreCursor[0], centreCursor[1]);
+    }
+
     grid.push([xIter,yIter]);
     if((yIter*X) < X){
-        console.log("This one 1", xIter, yIter);
         drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "vert");
     }
     else if((yIter*X) == X && (yIter*X) < 2*(X)){
-        console.log("This one 2", xIter, yIter);
         drawLine(xIter*(maxlineSize/X), maxlineSize, gameSelector, "hoz");
     }
     //xIter or yIter is 0->2 = 3 elements
     if((xIter+1 == X && yIter+1 == X) || (X == 2 && xIter == X-1)){
-        console.log("This one 3", xIter, yIter);
         drawLine(maxlineSize, maxlineSize, gameSelector, "vert");
         drawLine(maxlineSize, maxlineSize, gameSelector, "hoz");
     }
@@ -91,12 +113,12 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize){
     if(xy > 0){
         if(xy % X === 0 && xy != X*X){
             xIter = 0;
-            makeInteractable((xIter,yIter+1));
-            makeGrid(grid, X, xy, xIter, yIter+1, maxlineSize);
+            makeInteractable(xIter, yIter+1, centreCursor[0], centreCursor[1]);
+            makeGrid(grid, X, xy, xIter, yIter+1, maxlineSize, centreCursor);
         }
         else{
-            makeInteractable((xIter+1,yIter));
-            makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize);
+            makeInteractable(xIter+1, yIter, centreCursor[0], centreCursor[1]);
+            makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize, centreCursor);
         }
     }
 
