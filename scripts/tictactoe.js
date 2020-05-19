@@ -5,6 +5,8 @@ const gameSelector = boxy.querySelector('.game');
 
 var drawnState = 0;
 
+//delete canvas note and recreate it to refresh it
+
 executebtn.addEventListener('click', (e) => {
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
@@ -43,13 +45,6 @@ executebtn.addEventListener('click', (e) => {
 })
 
 
-function createcentreCursor(x,y){
-    let cursor = [];
-    cursor[0] = x;
-    cursor[1] = y;
-    return cursor;
-}
-
 function runtictactoe(x,y){
     xy = x*y;
     let grid =  new Array();
@@ -57,17 +52,27 @@ function runtictactoe(x,y){
     //assumes width = height
     //set to equal the width within the html
     //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
-    maxlineSize = 400; //this needs to be selected off the html document
-    let centreCursor = createcentreCursor((1*(maxlineSize/x))/2, (1*(maxlineSize/x)/2));
+    maxlineSize = 400; //this needs to be selected off of the html document
+    let centreCursor = (1*(maxlineSize/x))/2; //not necessary
     makeGrid(grid, x, xy, 0, 0, maxlineSize, centreCursor);
+    gridInteraction(xy); //this must be run after makeGrid
     console.log(grid);
     drawnState = 1;
 
 }
-    //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
-    //make two versions and compare their efficiency
 
-function makeInteractable(x, y, pixX, pixY){
+function gridInteraction(xy){
+    test = document.getElementsByClassName("game");
+    console.log(test[0].childNodes[0]);
+
+    for(i = 0; i != xy; i++){
+        console.log("here are my squares!", test[0].childNodes[i]);
+        console.log("here are my squares!", test[0].childNodes[i].className);
+    }
+}
+
+
+function makeInteractable(x, y, cursor){
     //interactable grid = find centre of grid
     //tag the centre
     //measure 1/2 some division of one line to the next line in both x and y direction
@@ -83,17 +88,23 @@ function makeInteractable(x, y, pixX, pixY){
     gameSelector.append(centreBox);
     // + String(x) + "," + String(y)
     centreDiv = boxy.querySelector("." + "a" + String(x) + "a" + String(y)); //must start with a letter and no commas
-    centreDiv.style.left = String(pixX)+"px";
-    centreDiv.style.top = String(pixY)+"px";
-    centreDiv.style.width = String(pixX+pixX)+"px";
-    centreDiv.style.height = String(pixY+pixY)+"px";
-    centreDiv.innerHTML = "test";
+    //0 = 1
+
+    //to speed this up: generate for only odd or even parity and the opposite parity is implied?
+    centreDiv.style.position = "absolute";
+    centreDiv.style.left = String(x*(cursor+cursor))+"px";
+    centreDiv.style.top = String(y*(cursor+cursor))+"px";
+    centreDiv.style.width = String(cursor+cursor)+"px";
+    centreDiv.style.height = String(cursor+cursor)+"px";
+    //rather than reusing the DOM, save all the names of the divtags into a map for efficiency
 }
 
 
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
+    //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
+    //make two versions and compare their efficiency
     if(xy == X*X){
-        makeInteractable(xIter, yIter, centreCursor[0], centreCursor[1]);
+        makeInteractable(xIter, yIter, centreCursor);
     }
 
     grid.push([xIter,yIter]);
@@ -113,11 +124,11 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
     if(xy > 0){
         if(xy % X === 0 && xy != X*X){
             xIter = 0;
-            makeInteractable(xIter, yIter+1, centreCursor[0], centreCursor[1]);
+            makeInteractable(xIter, yIter+1, centreCursor);
             makeGrid(grid, X, xy, xIter, yIter+1, maxlineSize, centreCursor);
         }
         else{
-            makeInteractable(xIter+1, yIter, centreCursor[0], centreCursor[1]);
+            makeInteractable(xIter+1, yIter, centreCursor);
             makeGrid(grid, X, xy, xIter+1, yIter, maxlineSize, centreCursor);
         }
     }
