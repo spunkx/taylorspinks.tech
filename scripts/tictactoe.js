@@ -55,8 +55,8 @@ function runtictactoe(x,y){
     maxlineSize = 400; //this needs to be selected off of the html document
     let centreCursor = (1*(maxlineSize/x))/2; //not necessary
     makeGrid(grid, x, xy, 0, 0, maxlineSize, centreCursor);
-    //gridInteraction(xy); //this must be run after makeGrid and might be named to game
-    console.log(grid);
+    gridInteractions(xy);
+    //console.log(grid);
     drawnState = 1;
 
 }
@@ -67,57 +67,49 @@ function runtictactoe(x,y){
 //https://books.google.com.au/books?id=EZuJAwAAQBAJ&pg=PA123&lpg=PA123&dq=ctx+and+background+colour&source=bl&ots=cno0WJO9Q-&sig=ACfU3U1PWVMTkCH-ZXLqbzMKF6U5gO8UNQ&hl=en&sa=X&ved=2ahUKEwj19LPY-sLpAhWbT30KHcfRBkoQ6AEwDXoECAoQAQ#v=onepage&q=ctx%20and%20background%20colour&f=false
 
 
-
-canvasWrap.addEventListener('mouseout', (e) => {
-    interact("mouseout");
-})
-
-canvasWrap.addEventListener('mouseover', (e) => {
-    interact("mouseover");
-})
-
-function interact(action){
-
-    if(action == "mouseover"){
-    //let allsquareSector = document.getElementsByClassName("game");
-        let centreDiv = boxy.querySelector("." + squares.childNodes[0].className);
-        console.log(centreDiv);
-        console.log(typeof(canvasWrap) == typeof(centreDiv));
-        centreDiv.style.backgroundColor = "red";
-        console.log(centreDiv);
-    }
-    else if(action == "mouseout"){
-        
-
-    }
+function gridInteractions(xy){
+    //redCounter
+    //greenCounter
+    //blueCounter
+    canvasWrap.addEventListener('mouseout', (e) => {
+        //e is the event object
+        interact(e, xy);
+    })
+    canvasWrap.addEventListener('mouseover', (e) => {
+        //e is the event object
+        interact(e, xy);
+    })
 }
 
-/*
-function gridInteraction(xy){
-    test = document.getElementsByClassName("game");
-    console.log(test[0].childNodes[0]);
+function interact(event, xy){
 
-    for(i = 0; i != xy; i++){
-        //console.log("test?", String(test[0].childNodes[i].className));
-
-        centreDiv = boxy.querySelector("." + String(test[0].childNodes[i].className));
-
+    //console.log(event.offsetX, squares.childNodes[0].style.left);
+    //squares.childNodes[i]
+    //console.log(event.relatedTarget.className);
+    
+    if(event.type == "mouseout"){
+        let centreDiv = boxy.querySelector("." + event.target.className);
+        centreDiv.style.backgroundColor = "";
     }
-}*/
+        
+    if(event.type == "mouseover"){
+        let centreDiv = boxy.querySelector("." + event.target.className);
+        centreDiv.style.backgroundColor = "red";
+        centreDiv.style.opacity = "0.5";
+    }
+
+}
 
 
 function makeInteractable(x, y, cursor){
-
     let centreBox = document.createElement("div");
     //div.classList
     centreBox.setAttribute('class', "a" + String(x) + "a" + String(y));
     squares.append(centreBox);
 
     centreDiv = squares.querySelector("." + "a" + String(x) + "a" + String(y)); //must start with a letter and no commas
-    console.log("centreDiv",centreDiv);
     //0 = 1
     //to speed this up: generate for only odd or even parity and the opposite parity is implied?
-    console.log(cursor);
     centreDiv.style.position = "absolute";
     centreDiv.style.left = String(x*(cursor+cursor))+"px";
     centreDiv.style.top = String(y*(cursor+cursor))+"px";
@@ -135,6 +127,10 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
 
     if(xy == X*X){
         makeInteractable(xIter, yIter, centreCursor);
+    }
+
+    if(xy == 1){
+        drawLine(0, maxlineSize, gameSelector, "hoz");
     }
 
     grid.push([xIter,yIter]);
@@ -165,15 +161,6 @@ function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
 
     return grid;
 }
-
-//grid garbage collection?
-
-/*
-function defineSquare(){
-
-}*/
-
-
 
 
     //user makes selection

@@ -49,7 +49,6 @@ let keyUp = document.addEventListener('keyup', (logKey) => {
 })
 
 
-//me learning recursion
 let i = 2;
 let n = 2;
 
@@ -66,16 +65,14 @@ function isI(i,n){
 //console.log("value of recursive calls", isI(i,n));
 
 
-//towers of hanoi?
+//towers of hanoi
 
-const diskNum = 3; //number of moves is 7... why? is a recursive function which is determined by the pervious instance
+const diskNum = 3; 
 let startRadius = 1;
 var disks = [];
 let towerA = [];
 let towerB = [];
 let towerC = [];
-
-//write some unit tests please me
 
 function getDisks(diskNum, startRadius, disks){
     currRadius = startRadius;

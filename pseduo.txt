@@ -7,3 +7,18 @@ make interactable
     //do this total squares minus 1/n, and then mirror on the left over
     //merge with current implementation for efficiency
     //must convert from grid cords to screen cords (css pixel values)
+
+
+
+fancy colours for grid
+    //event is the event object
+    //xy is the multiplication of x and y
+    //if I move in the x direction with the mouse I add to the "r" in the rbg
+    //if I move in the y directoin with the mouse I add to the "b" in the rbg
+    //if I move in the diagonal direction with the mouse I add to the "g"
+    //mouse direction determine by getting the pixel location of the squares and comparing it to the pixel location of the mouse
+
+
+
+
+
