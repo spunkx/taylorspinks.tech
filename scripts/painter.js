@@ -119,8 +119,7 @@ function makeInteractable(x, y, cursor){
     //rather than reusing the DOM, save all the names of the divtags into a map for efficiency
 }
 
-//old way of generating grids
-//interesting but not really useful
+
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
     //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
     //make two versions and compare their efficiency
