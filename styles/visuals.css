@@ -2,13 +2,26 @@ body {
     background-color: grey;
 }
 
-.game {
+.game{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.canvasWrap {
     display: none;
     position: relative;
     /*background-color: white;*/
     margin-top: 5%;
+    left: 10%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.squares{
+    /*display: none;*/
+    cursor: pointer;
+    /*background-color: white;*/
 }
 
 .movie {
@@ -25,17 +38,18 @@ body {
 }
 
 .tictactoe{
+    background-color: white;
     position: absolute;
     width: 500px;
     height: 500px;
     top: 0px;
     left: 500px;
     color: darkred;
-    background-color: white;
 }
 
 .execute{
     position: relative;
+    cursor: pointer;
     left: 75%;
 }
 
@@ -44,36 +58,9 @@ body {
     width: 90%;
 }
 
-.About article {
-    display: none;
-    text-align: center;
-    position: static;
-    background-color: white;
-    padding: 5px 5px;
-    box-shadow: 1px 1px 3px darkgray;
-    width:75%;
-    margin: 0 auto;
-}
-
 .DashboardButtons {
     text-align: center;
 }
 
-.DashboardButtons button{
-    position: relative;
-    background-color: white;
-    color: grey;
-    padding: 50px 50px;
-    text-decoration: none;
-    font-size: 22px;
-    border: none;
-    box-shadow: 1px 1px 3px darkgray;
-    text-shadow: 3px 1px 5px lightgrey;
-    margin-top: 1%;
-}
 
-.DashboardButtons button:hover{
-    transition: 0.3s;
-    background-color: darkgray;
-}
 

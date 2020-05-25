@@ -1,39 +1,41 @@
 const boxy = document.querySelector('.tictactoe');
 const executebtn = boxy.querySelector('.execute');
-const gameSelector = boxy.querySelector('.game');
+const gameSelector = boxy.querySelector('.game'); //canvas
+const canvasWrap = boxy.querySelector('.canvasWrap');
+const squares = boxy.querySelector('.squares');
 //another selector for the textboxes.
 
 var drawnState = 0;
 
-//delete canvas note and recreate it to refresh it
+//delete canvas node and recreate it to refresh it
 
 executebtn.addEventListener('click', (e) => {
     //https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector
     if((boxy.querySelector('.inputX').value.length || boxy.querySelector('.inputY').value.length) == 0){
-        gameSelector.style.display = "none";
+        canvasWrap.style.display = "none";
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter two integers!</b>";
         console.log("Please enter two integers!");
     }
     else if(!Number.isInteger(Number(boxy.querySelector('.inputX').value)) || !Number.isInteger(Number(boxy.querySelector('.inputY').value))){
         document.querySelector('.emptyFields').innerHTML = "";
-        gameSelector.style.display = "none";
+        canvasWrap.style.display = "none";
         document.querySelector('.emptyFields').innerHTML = "<b>Please enter integer values only!</b>";
         console.log("Please enter integer values only!");
     }
     else if(boxy.querySelector('.inputX').value != boxy.querySelector('.inputY').value){
         document.querySelector('.emptyFields').innerHTML = "";
-        gameSelector.style.display = "none";
+        canvasWrap.style.display = "none";
         document.querySelector('.emptyFields').innerHTML = "<b>This game currently supports x=y only!</b>";
         console.log("This game currently supports x=y only!");
     }
     else{
         document.querySelector('.emptyFields').innerHTML = "";
         if(drawnState == 1){
-            gameSelector.style.display = "none";
-            gameSelector.style.display = "block";
+            canvasWrap.style.display = "none";
+            canvasWrap.style.display = "block";
         }
         else{
-            gameSelector.style.display = "block";
+            canvasWrap.style.display = "block";
         }
         //check for integer
         //when dimensions aren't square, use ratio for grid
@@ -44,58 +46,85 @@ executebtn.addEventListener('click', (e) => {
     }
 })
 
-
 function runtictactoe(x,y){
     xy = x*y;
     let grid =  new Array();
     //define boxpixelLength
     //assumes width = height
     //set to equal the width within the html
-    //DO NOT USE CSS FOR CANVAS (if you're a noob like me), as existing properties have a parent behavior on any CSS settings set, add unnecessary complication
     maxlineSize = 400; //this needs to be selected off of the html document
     let centreCursor = (1*(maxlineSize/x))/2; //not necessary
     makeGrid(grid, x, xy, 0, 0, maxlineSize, centreCursor);
-    gridInteraction(xy); //this must be run after makeGrid
+    //gridInteraction(xy); //this must be run after makeGrid and might be named to game
     console.log(grid);
     drawnState = 1;
 
 }
 
+//listen will run the interaction function
+
+//https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+//https://books.google.com.au/books?id=EZuJAwAAQBAJ&pg=PA123&lpg=PA123&dq=ctx+and+background+colour&source=bl&ots=cno0WJO9Q-&sig=ACfU3U1PWVMTkCH-ZXLqbzMKF6U5gO8UNQ&hl=en&sa=X&ved=2ahUKEwj19LPY-sLpAhWbT30KHcfRBkoQ6AEwDXoECAoQAQ#v=onepage&q=ctx%20and%20background%20colour&f=false
+
+
+
+canvasWrap.addEventListener('mouseout', (e) => {
+    interact("mouseout");
+})
+
+canvasWrap.addEventListener('mouseover', (e) => {
+    interact("mouseover");
+})
+
+function interact(action){
+
+    if(action == "mouseover"){
+    //let allsquareSector = document.getElementsByClassName("game");
+        let centreDiv = boxy.querySelector("." + squares.childNodes[0].className);
+        console.log(centreDiv);
+        console.log(typeof(canvasWrap) == typeof(centreDiv));
+        centreDiv.style.backgroundColor = "red";
+        console.log(centreDiv);
+    }
+    else if(action == "mouseout"){
+        
+
+    }
+}
+
+/*
 function gridInteraction(xy){
     test = document.getElementsByClassName("game");
     console.log(test[0].childNodes[0]);
 
     for(i = 0; i != xy; i++){
-        console.log("here are my squares!", test[0].childNodes[i]);
-        console.log("here are my squares!", test[0].childNodes[i].className);
+        //console.log("test?", String(test[0].childNodes[i].className));
+
+        centreDiv = boxy.querySelector("." + String(test[0].childNodes[i].className));
+
     }
-}
+}*/
 
 
 function makeInteractable(x, y, cursor){
-    //interactable grid = find centre of grid
-    //tag the centre
-    //measure 1/2 some division of one line to the next line in both x and y direction
-    //define tag as the area of that singular square
-    //do this total squares minus 1/n, and then mirror on the left over
-    //merge with current implementation for efficiency
-    //must convert from grid cords to screen cords (css pixel values)
-
-    //console.log("makeInteractable",x,y);
 
     let centreBox = document.createElement("div");
+    //div.classList
     centreBox.setAttribute('class', "a" + String(x) + "a" + String(y));
-    gameSelector.append(centreBox);
-    // + String(x) + "," + String(y)
-    centreDiv = boxy.querySelector("." + "a" + String(x) + "a" + String(y)); //must start with a letter and no commas
-    //0 = 1
+    squares.append(centreBox);
 
+    centreDiv = squares.querySelector("." + "a" + String(x) + "a" + String(y)); //must start with a letter and no commas
+    console.log("centreDiv",centreDiv);
+    //0 = 1
     //to speed this up: generate for only odd or even parity and the opposite parity is implied?
+    console.log(cursor);
     centreDiv.style.position = "absolute";
     centreDiv.style.left = String(x*(cursor+cursor))+"px";
     centreDiv.style.top = String(y*(cursor+cursor))+"px";
     centreDiv.style.width = String(cursor+cursor)+"px";
     centreDiv.style.height = String(cursor+cursor)+"px";
+
+
     //rather than reusing the DOM, save all the names of the divtags into a map for efficiency
 }
 
@@ -103,6 +132,7 @@ function makeInteractable(x, y, cursor){
 function makeGrid(grid, X, xy, xIter, yIter, maxlineSize, centreCursor){
     //make grid recursively, bad idea, better to draw grids iteratively due to the recursion depth
     //make two versions and compare their efficiency
+
     if(xy == X*X){
         makeInteractable(xIter, yIter, centreCursor);
     }

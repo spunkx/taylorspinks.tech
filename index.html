@@ -12,7 +12,7 @@
             <button class="rightbtn">right</button>
             <button class="upbtn">up</button>
             <button class="downbtn">down</button>
-        </div>
+    </div>
     </div>
     <div class="tictactoe">
         <label for="inputX">Input X Value</label>
@@ -21,20 +21,16 @@
         <input type="text" class="inputY" name="inputY">
         <button class="execute">Execute</button>
         <label type="text" class="emptyFields"></label>
-        <canvas class="game" width="400" height="400"></canvas>
+        <div class = "canvasWrap">
+            <canvas class="game" width="400" height="400"></canvas>
+            <div class="squares"></div>
+            <!--https://stackoverflow.com/questions/5763911/placing-a-div-within-a-canvas-->
+        </div>
     </div>
     <div class="Dashboard">
         <div class="About">
-            <article>
-                <h1>Content</h1>
-            </article>
         </div>
         <div class ="DashboardButtons">
-            <!--<button class="Aboutbtn">About</button>/
-            <button class="Blogbtn">Blog</button>
-            <button class="Projectsbtn">Projects</button>
-            <button class="Coverlbtn">Cover Letter</button>
-            <button class="Resumebtn">Resume</button>-->
         </div>
     </div>
     <script type="text/javascript" src="scripts\boxMovement.js"></script>

@@ -22,44 +22,6 @@ downbtn.addEventListener('click', (e) => {
     boxSelector.style.top = (parseFloat(boxSelector.style.top.replace("px", ""))+movementSpeed) + "px";
 })
 
-/*
-var map = {}
-onkeydown = onkeyup = function(e){
-    //map idea from https://stackoverflow.com/questions/5203407/how-to-detect-if-multiple-keys-are-pressed-at-once-using-javascript
-    //pushdown left-> pushdown shift results in being stuck in the if statement from line 33 to line 38
-    e = e || event;
-    map[e.keyCode] = e.type == 'keydown';
-    console.log("e.keyCode", e.keyCode)
-    console.log("e.type", e.type)
-    console.log(map)
-    if(e.keyCode == 16 && e.type == 'keydown'){
-        movementSpeed = 5;
-        movementSpeed = movementSpeed / 0.25;
-        //when the shift key is pressed while the arrow key is pressed, the program loops
-        console.log("on key down " + movementSpeed)
-
-    }
-    else if(e.keyCode == 16 && e.type == 'keyup'){
-        movementSpeed = 5
-        console.log("on key up " + movementSpeed)
-    }
-    else if(e.keyCode == 37 && e.type == 'keydown'){
-        console.log("on left key " + movementSpeed)
-        boxSelector.style.left = (parseFloat(boxSelector.style.left.replace("px", ""))-movementSpeed) + "px";
-    }
-    else if(e.keyCode == 39 && e.type == 'keydown'){
-        console.log("on right key " + movementSpeed)
-        boxSelector.style.left = (parseFloat(boxSelector.style.left.replace("px", ""))+movementSpeed) + "px";
-    }
-    else if(e.keyCode == 38 && e.type == 'keydown'){
-        console.log("on up key " + movementSpeed)
-        boxSelector.style.top = (parseFloat(boxSelector.style.top.replace("px", ""))-movementSpeed) + "px";
-    }
-    else if(e.keyCode == 40 && e.type == 'keydown'){
-        console.log("on down key " + movementSpeed)
-        boxSelector.style.top = (parseFloat(boxSelector.style.top.replace("px", ""))+movementSpeed) + "px";
-    }
-}*/
 
 let keyDown = document.addEventListener('keydown', (logKey) => {
     if(logKey.keyCode == 37){
