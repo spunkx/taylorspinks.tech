@@ -4,10 +4,11 @@
 //lineLocationX & lineLocationY = where you want my line on the screen
 //https://www.w3resource.com/html5-canvas/html5-canvas-lines.php
 function drawLine(start, end, selector, direction){
+    //selector = boxy.querySelector(selector);
+
     let ctx = selector.getContext("2d");
     //for now direction is a string, but later will change to a degrees or radians measurement
     if(direction === "hoz"){
-
         //need to use the ACTUAL locations to define the x and y, literally, rather than using an abstract value
         //ctx.strokeStyle = "#00ff00";
         ctx.beginPath();
@@ -23,20 +24,6 @@ function drawLine(start, end, selector, direction){
         ctx.strokeStyle = "green";
         ctx.stroke();
     }
-    //tictactoe cross
-    else if(direction === "diag"){
-
-    }
-    //must invert lineLength with x
-
-}
-
-//tictactoe naught
-function drawCurve(x, y, size, selector){
-    let ctx = selector.getContext("2d"); 
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.arc(x, y, size, 0, Math.PI * 2, false);
 }
 /*
 function eraseLine(){
