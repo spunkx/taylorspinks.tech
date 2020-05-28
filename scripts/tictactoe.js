@@ -37,11 +37,14 @@ executebtn.addEventListener('click', (e) => {
         else{
             canvasWrap.style.display = "block";
         }
-        //check for integer
-        //when dimensions aren't square, use ratio for grid
-        
+
+        let grid = new Array();
+        gameWidth = gameSelector.width;
+        //gameHeight = gameSelector.width;
         x = boxy.querySelector('.inputX').value;
         y = boxy.querySelector('.inputY').value;
-        generateinteractableGrid(x,y);
+        generateinteractableGrid(x, y, gameWidth, grid);
+
+        console.log(grid);
     }
 })
