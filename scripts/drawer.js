@@ -9,7 +9,6 @@ function drawLine(start, end, selector, direction){
     let ctx = selector.getContext("2d");
     //for now direction is a string, but later will change to a degrees or radians measurement
     if(direction === "hoz"){
-        //need to use the ACTUAL locations to define the x and y, literally, rather than using an abstract value
         //ctx.strokeStyle = "#00ff00";
         ctx.beginPath();
         ctx.moveTo(0, start);
