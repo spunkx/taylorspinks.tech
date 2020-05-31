@@ -43,7 +43,8 @@ executebtn.addEventListener('click', (e) => {
         //gameHeight = gameSelector.width;
         x = boxy.querySelector('.inputX').value;
         y = boxy.querySelector('.inputY').value;
-        grid = generateinteractableGrid(x, y, gameWidth, grid);
+        grid = generateinteractableGrid(x, y, gameWidth, grid, gameSelector);
+        drawGrid(grid, x);
 
         console.log(grid);
     }
